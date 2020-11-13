@@ -7,6 +7,10 @@ pygame.font.init()
 screen_width, screen_height = 800, 600
 screen_size = (screen_width, screen_height)
 screen = pygame.display.set_mode(screen_size)
+troll_img = pygame.image.load("trollface.png")
+troll_img = pygame.transform.scale(troll_img, (70, 70))
+
+
 FPS = 60
 
 #colors
@@ -45,6 +49,7 @@ class Player:
 		text = myfont.render(str(self.points), False, RED)
 		screen.blit(text, (50,50))
 
+
 class Food:
 	def __init__(self):
 		self.size = 50
@@ -55,7 +60,8 @@ class Food:
 	def draw_food(self):
 		if self.pos_y >= 0 and self.pos_y < screen_height:
 			self.pos_y += self.drop_speed
-			pygame.draw.rect(screen, BLUE, (self.pos_x, self.pos_y, self.size, self.size))
+			screen.blit(troll_img, (self.pos_x, self.pos_y))
+			#pygame.draw.rect(screen, BLUE, (self.pos_x, self.pos_y, self.size, self.size))
 		else:
 			self.pos_y = 0
 
@@ -71,8 +77,9 @@ class Food:
 			self.pos_y = 0 - self.size
 			self.pos_x = random.randint(0, screen_width - self.size)
 			player.points += 1
+			self.drop_speed += 1
 			print(player.points)
-
+			player_1.movement_speed += 1
 
 myfont = pygame.font.SysFont("Calibri", 50)
 clock = pygame.time.Clock()
